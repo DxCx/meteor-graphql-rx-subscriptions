@@ -23,6 +23,7 @@
     "graphql-server-ws": "file:///Users/xavier/Dev/apollo/graphql-server/packages/graphql-server-ws",
     "graphql-tools": "^0.10.0",
     "meteor-node-stubs": "~0.2.4",
+    "meteor-rxjs": "^0.4.7",
     "rxjs": "^5.1.1",
     "ts-node": "^2.1.0",
     "typescript": "^2.2.1",
