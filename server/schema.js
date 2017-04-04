@@ -8,7 +8,12 @@ type Query {
 
 type Subscription {
   clock: String
-  cookiesTotal: Int
+  cookies: [Cookie]
+}
+
+type Cookie {
+  _id: String
+  eaten: Boolean
 }
 `;
 
@@ -26,6 +31,10 @@ export const resolvers = {
     },
     Subscription: {
       clock: (root, args, ctx) => ctx.clockSource,
-      cookiesTotal: (root, args, ctx) => ctx.Cookies.find().map(cookies => cookies.length),
+      cookies: Meteor.bindEnvironment(
+        (root, args, ctx) => {
+          return ctx.Cookies.find({})
+        }
+      ),
     },
 };

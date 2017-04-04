@@ -3,6 +3,10 @@ subscription clockSubscription {
   clock
 }
 
+subscription cookiesSubscription {
+  cookies
+}
+
 query intTest {
   someInt
 }
