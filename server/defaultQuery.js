@@ -4,7 +4,10 @@ subscription clockSubscription {
 }
 
 subscription cookiesSubscription {
-  cookies
+  cookies {
+    _id
+    eaten
+  }
 }
 
 query intTest {

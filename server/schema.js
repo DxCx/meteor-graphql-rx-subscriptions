@@ -31,10 +31,18 @@ export const resolvers = {
     },
     Subscription: {
       clock: (root, args, ctx) => ctx.clockSource,
-      cookies: Meteor.bindEnvironment(
-        (root, args, ctx) => {
-          return ctx.Cookies.find({})
-        }
-      ),
+      // cookies: (root, args, ctx) => new Observable(observer => ({
+      //   onNext: Meteor.bindEnvironment(() => ctx.Cookies.find({})),
+      // }))
+      cookies: (root, args, ctx) => new Observable(observer => {
+        let subscriptionHandle;
+        Meteor.bindEnvironment(() => {
+          subscriptionHandle = ctx.Cookies.find({}).subscribe(observer);
+        });
+        
+        return () => {
+          process.nextTick(() => subscriptionHandle && subscriptionHandle.unsubscribe())
+        };
+      })
     },
 };
