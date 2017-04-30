@@ -6,10 +6,13 @@ import * as graphqlRxJs from 'graphql-rxjs';
 import express from 'express';
 import url from 'url';
 import defaultQuery from './defaultQuery';
-import { typeDefs, resolvers, clockSource, Cookies } from './schema';
+import { typeDefs, resolvers, Cookies } from './schema';
+import { Subject } from 'rxjs';
+import { addFiberToResolvers } from './hook';
 
 const WS_PORT = '3002';
 const GRAPHQL_ENDPOINT = '/graphql';
+const LAST_COOKIE = new Subject();
 
 const app = express();
 app.use("/graphiql", graphiqlExpress({
@@ -23,6 +26,7 @@ const schema = makeExecutableSchema({
   resolvers,
 });
 graphqlRxJs.addReactiveDirectivesToSchema(schema);
+addFiberToResolvers(schema);
 
 const server = app.listen(WS_PORT, () => {
   console.log(`listening on port ${WS_PORT}`);
@@ -35,11 +39,10 @@ const server = app.listen(WS_PORT, () => {
     // Multiplex ws connections by path.
     switch ( location.pathname ) {
      case GRAPHQL_ENDPOINT: // Same path graphiql is pointed to
-       console.log('running the endpoint');
        return {
-           context: { 
-             clockSource, 
-             Cookies 
+           context: {
+             Cookies,
+             lastCookie: LAST_COOKIE,
            },
            schema,
            executor: graphqlRxJs,
