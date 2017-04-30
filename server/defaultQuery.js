@@ -10,6 +10,13 @@ subscription cookiesSubscription {
   }
 }
 
+mutation addOne {
+  addCookie {
+    eaten
+    _id
+  }
+}
+
 query intTest {
   someInt
 }
