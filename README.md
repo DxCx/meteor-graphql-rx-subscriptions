@@ -2,13 +2,12 @@
 ⚗️ Experimenting with observables, Meteor &amp; GraphQL
 
 Pre-install: 
-1. Clone https://github.com/DxCx/graphql-server/
-2. Checkout on `graphql-server-ws-core`
+1. `git clone https://github.com/DxCx/graphql-server/ -b graphql-server-ws-core`
+2. `cd graphql-server`
 3. `npm install`
-4. Copy the path folder
+4. `cd ..`
 
 Install:
-1. Clone this repo
-2. Edit `package.json` where `file://` to have the right path to `graphql-server` et al. (maybe you can `npm link`?)
-3. `npm install` (need typescript)
-4. `npm start` (need meteor)
+1. Clone this repo (Make sure you have graphql-server as a "brother" of this repo)
+2. `npm install` (need typescript)
+3. `npm start` (need meteor)
