@@ -17,12 +17,12 @@ app.use("/graphiql", graphiqlExpress({
 		query: defaultQuery,
 }));
 
-
 // Compose togather resolver and typeDefs.
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
 });
+graphqlRxJs.addReactiveDirectivesToSchema(schema);
 
 const server = app.listen(WS_PORT, () => {
   console.log(`listening on port ${WS_PORT}`);

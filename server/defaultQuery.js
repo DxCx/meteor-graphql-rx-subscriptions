@@ -1,6 +1,6 @@
 const query = `
 subscription clockSubscription {
-  clock
+  clock @defer
 }
 
 subscription cookiesSubscription {
