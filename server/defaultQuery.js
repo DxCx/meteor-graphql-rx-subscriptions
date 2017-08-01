@@ -7,7 +7,7 @@ subscription cookiesSubscription {
 }
 
 mutation addOne {
-  addCookie @defer {
+  addCookie {
     eaten
     _id
   }

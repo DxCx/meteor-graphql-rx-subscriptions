@@ -38,6 +38,14 @@ export const resolvers = {
       clearCookies: (root, args, ctx) => ctx.Cookies.remove({}),
     },
     Subscription: {
-      lastCookie: (root, args, ctx) => ctx.lastCookie,
+      lastCookie: (root, args, ctx) => root,
     },
 };
+
+export const subscriptionMap = {
+  // XXX: Since this comes from rootValue,
+  // root is not given to callback.
+  lastCookie(args, ctx) {
+    return ctx.lastCookie;
+  },
+}

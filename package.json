@@ -2,31 +2,24 @@
   "name": "meteor-graphql-rx-subscriptions",
   "private": true,
   "scripts": {
-    "start": "meteor run",
-    "rxjs": "ts-node ./test-full-rxjs.ts",
-    "sm": "ts-node ./test-full.ts"
+    "start": "meteor run"
   },
   "dependencies": {
-    "@types/express": "^4.0.35",
-    "@types/graphql": "^0.8.6",
-    "@types/ws": "0.0.38",
-    "babel-runtime": "^6.20.0",
-    "express": "^4.14.1",
-    "graphql": "^0.9.6",
-    "graphql-rxjs": "^0.9.6-0",
-    "graphql-server-core": "file:../graphql-server/packages/graphql-server-core",
-    "graphql-server-express": "file:../graphql-server/packages/graphql-server-express",
-    "graphql-server-module-graphiql": "file:../graphql-server/packages/graphql-server-module-graphiql",
-    "graphql-server-observable": "file:../graphql-server/packages/graphql-server-observable",
-    "graphql-server-reactive-core": "file:../graphql-server/packages/graphql-server-reactive-core",
-    "graphql-server-reactive-protocol": "file:../graphql-server/packages/graphql-server-reactive-protocol",
-    "graphql-server-ws": "file:../graphql-server/packages/graphql-server-ws",
-    "graphql-tools": "^0.10.0",
-    "meteor-node-stubs": "~0.2.4",
+    "@types/express": "^4.0.36",
+    "@types/graphql": "^0.10.1",
+    "@types/ws": "3.0.2",
+    "babel-runtime": "^6.25.0",
+    "express": "^4.15.3",
+    "graphql": "^0.10.5",
+    "graphql-rxjs": "^0.10.5-0",
+    "apollo-server-express": "^1.0.4",
+    "graphql-tools": "^1.1.0",
+    "meteor-node-stubs": "~0.2.11",
     "meteor-rxjs": "^0.4.7",
-    "rxjs": "^5.3.0",
-    "ts-node": "^2.1.0",
-    "typescript": "^2.2.1",
-    "ws": "^2.0.3"
+    "rxjs": "^5.4.2",
+    "subscriptions-transport-ws": "^0.8.2",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.4.2",
+    "ws": "^3.1.0"
   }
 }
