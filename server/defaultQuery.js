@@ -1,17 +1,26 @@
 const query = `
-subscription clockSubscription {
-  clock
-}
-
 subscription cookiesSubscription {
-  cookies {
+  lastCookie {
     _id
     eaten
   }
 }
 
-query intTest {
-  someInt
+mutation addOne {
+  addCookie {
+    eaten
+    _id
+  }
+}
+
+mutation cleanup {
+  clearCookies
+}
+
+query LiveCookies {
+  cookies @live {
+    _id
+  }
 }
 `;
 

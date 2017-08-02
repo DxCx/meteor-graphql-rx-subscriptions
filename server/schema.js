@@ -1,14 +1,20 @@
-import { Observable } from 'rxjs';
 import { MongoObservable } from 'meteor-rxjs';
+// XXX: Schema shouldn't be aware of this, this should come from main :)
+export const Cookies = new MongoObservable.Collection('cookies');
 
 export const typeDefs = `
 type Query {
-  someInt: Int
+  cookies: [Cookie]
 }
 
 type Subscription {
   clock: String
-  cookies: [Cookie]
+  lastCookie: Cookie
+}
+
+type Mutation {
+  addCookie: Cookie
+  clearCookies: Int,
 }
 
 type Cookie {
@@ -17,32 +23,29 @@ type Cookie {
 }
 `;
 
-export const clockSource = Observable.interval(1000)
-                      .map(() => new Date())
-                      .publishReplay(1)
-                      .refCount();
-
-export const Cookies = new MongoObservable.Collection('cookies');
-// Meteor.startup(() => Meteor.setInterval(Cookies.insert({eaten: false}), 2000))
-
 export const resolvers = {
     Query: {
-      someInt: () => 123,
+      cookies: (root, args, ctx) => ctx.Cookies.find({}),
+    },
+    Mutation: {
+      addCookie: (root, args, ctx) => {
+        return ctx.Cookies.insert({eaten: false})
+          .map((newCookieId) => {
+            return ctx.Cookies.findOne({ _id: newCookieId });
+          })
+          .do((lastCookie) => ctx.lastCookie.next(lastCookie));
+      },
+      clearCookies: (root, args, ctx) => ctx.Cookies.remove({}),
     },
     Subscription: {
-      clock: (root, args, ctx) => ctx.clockSource,
-      // cookies: (root, args, ctx) => new Observable(observer => ({
-      //   onNext: Meteor.bindEnvironment(() => ctx.Cookies.find({})),
-      // }))
-      cookies: (root, args, ctx) => new Observable(observer => {
-        let subscriptionHandle;
-        Meteor.bindEnvironment(() => {
-          subscriptionHandle = ctx.Cookies.find({}).subscribe(observer);
-        });
-        
-        return () => {
-          process.nextTick(() => subscriptionHandle && subscriptionHandle.unsubscribe())
-        };
-      })
+      lastCookie: (root, args, ctx) => root,
     },
 };
+
+export const subscriptionMap = {
+  // XXX: Since this comes from rootValue,
+  // root is not given to callback.
+  lastCookie(args, ctx) {
+    return ctx.lastCookie;
+  },
+}
